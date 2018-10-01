@@ -37,12 +37,23 @@ namespace KK.WebAPI.Helpers
                 // resource owner password grant client
                 new Client
                 {
+                    ClientName = "KrisKringle.Angular",
                     ClientId = "kk.angular",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
-                    ClientSecrets =
+                    AccessTokenType = AccessTokenType.Reference,
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RedirectUris = new List<string>
                     {
-                        new Secret("amouseinthehouse".Sha256())
+                        "https://localhost:44311"
+                    },
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                        "https:/localhost:4431/Unauthorized"
+                    },
+                    AllowedCorsOrigins = new List<string>
+                    {
+                        "https://localhost:44311",
+                        "http://localhost:44311"
                     },
                     AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -50,8 +61,7 @@ namespace KK.WebAPI.Helpers
                         IdentityServerConstants.StandardScopes.Email,
                         IdentityServerConstants.StandardScopes.Address,
                         "kkapi"
-                    },
-                    RequireClientSecret = false,
+                    }
                 }
             };
         }
